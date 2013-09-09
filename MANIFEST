@@ -1,0 +1,10 @@
+Changes
+Makefile.PL
+MANIFEST
+README
+t/WWW-Search-Torrentz.t
+t/WWW-Search-Torrentz-Result.t
+lib/WWW/Search/Torrentz.pm
+lib/WWW/Search/Torrentz/Result.pm
+META.yml                                 Module YAML meta-data (added by MakeMaker)
+META.json                                Module JSON meta-data (added by MakeMaker)
