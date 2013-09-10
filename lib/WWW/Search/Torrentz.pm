@@ -3,10 +3,10 @@ package WWW::Search::Torrentz;
 use 5.014000;
 use strict;
 use warnings;
-no warnings 'experimental::smartmatch';
+no if $] >= 5.018, warnings => 'experimental::smartmatch';
 use parent qw/WWW::Search/;
 
-our $VERSION = '0.001';
+our $VERSION = '0.001001';
 our $MAINTAINER = 'Marius Gavrilescu <marius@ieval.ro>';
 
 use WWW::Search::Torrentz::Result;
@@ -75,7 +75,7 @@ __END__
 
 =head1 NAME
 
-WWW::Search::Torrentz - search torrentz.eu with WWW:Search
+WWW::Search::Torrentz - search torrentz.eu with WWW::Search
 
 =head1 SYNOPSIS
 

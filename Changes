@@ -1,4 +1,6 @@
 Revision history for Perl extension WWW::Search::Torrentz.
 
+0.001001  Tue 10 Sep 09:52:24 EEST 2013
+	- Fix WWW::Search::Torrentz on perl < 5.018
 0.001  Mon  9 Sep 15:00:23 EEST 2013
 	- Initial release

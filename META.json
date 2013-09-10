@@ -1,5 +1,5 @@
 {
-   "abstract" : "search torrentz.eu with WWW:Search",
+   "abstract" : "search torrentz.eu with WWW::Search",
    "author" : [
       "Marius Gavrilescu <marius@ieval.ro>"
    ],
@@ -32,11 +32,12 @@
       },
       "runtime" : {
          "requires" : {
+            "Bit::Vector" : "0",
             "WWW::Search" : "0",
             "perl" : "5.014000"
          }
       }
    },
    "release_status" : "stable",
-   "version" : "0.001"
+   "version" : "0.001001"
 }

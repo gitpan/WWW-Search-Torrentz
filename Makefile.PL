@@ -9,6 +9,7 @@ WriteMakefile(
   LICENSE           => 'perl',
   PREREQ_PM         => {
 	WWW::Search => 0,
+	Bit::Vector => 0,
   },
   BUILD_REQUIRES    => {
 	WWW::Search::Test => 0,

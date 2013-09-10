@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use parent qw/WWW::SearchResult/;
 
-our $VERSION = '0.001';
+our $VERSION = '0.001001';
 
 use HTML::TreeBuilder;
 use URI::Escape qw/uri_escape/;
