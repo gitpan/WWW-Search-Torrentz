@@ -5,21 +5,21 @@ use strict;
 use warnings;
 use parent qw/WWW::SearchResult/;
 
-our $VERSION = '0.001001';
+our $VERSION = '0.001002';
 
 use HTML::TreeBuilder;
 use URI::Escape qw/uri_escape/;
 
 sub new{
-  my ($class, %args) = @_;
-  my $self = $class->SUPER::new(@_);
-  $self->{parsed} = 0;
+	my ($class, %args) = @_;
+	my $self = $class->SUPER::new(@_);
+	$self->{parsed} = 0;
 
-  no strict 'refs';
-  $self->$_($args{$_}) for qw/title verified age size seeders leechers infohash/;
-  $self->{ua} = $args{ua};
-  $self->add_url("https://torrentz.eu/$args{infohash}");
-  $self
+	no strict 'refs';
+	$self->$_($args{$_}) for qw/title verified age size seeders leechers infohash/;
+	$self->{ua} = $args{ua};
+	$self->add_url("https://torrentz.eu/$args{infohash}");
+	$self
 }
 
 sub infohash { shift->_elem(infohash => @_) }
@@ -30,81 +30,81 @@ sub seeders { shift->_elem(seeders => @_) }
 sub leechers { shift->_elem(leechers => @_) }
 
 sub magnet{
-  my ($self, $full) = @_;
-  my $infohash = $self->infohash;
-  my $title = uri_escape $self->title;
-  my $uri = "magnet:?xt=urn:btih:$infohash&dn=$title";
+	my ($self, $full) = @_;
+	my $infohash = $self->infohash;
+	my $title = uri_escape $self->title;
+	my $uri = "magnet:?xt=urn:btih:$infohash&dn=$title";
 
-  $uri .= join '', map { "&tr=$_"} map { uri_escape $_ } $self->trackers if $full;
+	$uri .= join '', map { "&tr=$_"} map { uri_escape $_ } $self->trackers if $full;
 
-  $uri
+	$uri
 }
 
 sub parse_page {
-  my $self = $_[0];
-  my $tree = HTML::TreeBuilder->new;
-  $tree->utf8_mode(1);
-  $tree->parse($self->{ua}->get($self->url)->content);
-  $tree->eof;
+	my $self = $_[0];
+	my $tree = HTML::TreeBuilder->new;
+	$tree->utf8_mode(1);
+	$tree->parse($self->{ua}->get($self->url)->content);
+	$tree->eof;
 
-  my $trackers = $tree->look_down(class => 'trackers');
-  $self->{trackers} //= [];
-  for my $tracker ($trackers->find('dl')) {
-	push $self->{trackers}, $tracker->find('a')->as_text;
-  }
+	my $trackers = $tree->look_down(class => 'trackers');
+	$self->{trackers} //= [];
+	for my $tracker ($trackers->find('dl')) {
+		push $self->{trackers}, $tracker->find('a')->as_text;
+	}
 
-  my $files = $tree->look_down(class => 'files');
-  $self->{files} //= [];
-  $self->parse_directory(scalar $files->find('li'), '');
+	my $files = $tree->look_down(class => 'files');
+	$self->{files} //= [];
+	$self->parse_directory(scalar $files->find('li'), '');
 
-  $self->{parsed} = 1;
+	$self->{parsed} = 1;
 }
 
 sub parse_directory{
-  my ($self, $directory, $prefix) = @_;
-  $prefix .= $directory->as_text . '/';
-  my $contents_ul = $directory->right->find('ul');
-  return unless defined $contents_ul; # Empty directory
-  my @children = $contents_ul->content_list;
-  my $skip = 0;
-  for my $child (@children) {
-	if ($skip) {
-	  $skip = 0;
-	  next;
-	}
+	my ($self, $directory, $prefix) = @_;
+	$prefix .= $directory->as_text . '/';
+	my $contents_ul = $directory->right->find('ul');
+	return unless defined $contents_ul; # Empty directory
+	my @children = $contents_ul->content_list;
+	my $skip = 0;
+	for my $child (@children) {
+		if ($skip) {
+			$skip = 0;
+			next;
+		}
 
-	if (defined $child->attr('class') && $child->attr('class') eq 't') {
-	  $self->parse_directory($child, $prefix);
-	  $skip = 1;
-	} else {
-	  $child->objectify_text;
-	  my ($filename, $size) = $child->find('~text');
-	  push $self->{files}, +{
-		path => $prefix.$filename->attr('text'),
-		size => $size->attr('text')
-	  }
+		if (defined $child->attr('class') && $child->attr('class') eq 't') {
+			$self->parse_directory($child, $prefix);
+			$skip = 1;
+		} else {
+			$child->objectify_text;
+			my ($filename, $size) = $child->find('~text');
+			push $self->{files}, +{
+				path => $prefix.$filename->attr('text'),
+				size => $size->attr('text')
+			}
+		}
 	}
-  }
 }
 
 sub trackers{
-  my $self = $_[0];
-  $self->parse_page unless $self->{parsed};
-  @{$self->{trackers}}
+	my $self = $_[0];
+	$self->parse_page unless $self->{parsed};
+	@{$self->{trackers}}
 }
 
 sub files{
-  my $self = $_[0];
-  $self->parse_page unless $self->{parsed};
-  @{$self->{files}}
+	my $self = $_[0];
+	$self->parse_page unless $self->{parsed};
+	@{$self->{files}}
 }
 
 sub torrent{
-  my $self = $_[0];
-  my $torrage = 'http://torrage.com/torrent/' . uc $self->infohash . '.torrent';
-  my $torrent = $self->{ua}->get($torrage)->content;
+	my $self = $_[0];
+	my $torrage = 'http://torrage.com/torrent/' . uc $self->infohash . '.torrent';
+	my $torrent = $self->{ua}->get($torrage)->content;
 
-  $torrent; # TODO: if this is undef, download metadata with magnet link
+	$torrent; # TODO: if this is undef, download metadata with magnet link
 }
 
 1;

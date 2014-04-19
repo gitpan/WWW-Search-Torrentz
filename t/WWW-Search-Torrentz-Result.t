@@ -6,13 +6,13 @@ use Test::More tests => 9;
 BEGIN { use_ok('WWW::Search::Torrentz::Result') };
 
 my $result = WWW::Search::Torrentz::Result->new(
-  title => 'Title',
-  verified => 4,
-  age => 'age',
-  size => 'size',
-  seeders => 50,
-  leechers => 50,
-  infohash => '514131e668a8134bca9668ef2e19e690924adf86',
+	title => 'Title',
+	verified => 4,
+	age => 'age',
+	size => 'size',
+	seeders => 50,
+	leechers => 50,
+	infohash => '514131e668a8134bca9668ef2e19e690924adf86',
 );
 
 is $result->title, 'Title', 'title';

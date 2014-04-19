@@ -1,0 +1,43 @@
+This file contains message digests of all files listed in MANIFEST,
+signed via the Module::Signature module, version 0.73.
+
+To verify the content in this distribution, first make sure you have
+Module::Signature installed, then type:
+
+    % cpansign -v
+
+It will check each file's integrity, as well as the signature's
+validity.  If "==> Signature verified OK! <==" is not displayed,
+the distribution may already have been compromised, and you should
+not run its Makefile.PL or Build.PL.
+
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA512
+
+SHA1 a4754f6d0e0300c7fa462f348316a8e44225e85c Changes
+SHA1 c52a48e7e802bc98c42543d49b9a1e7c9d2d4071 MANIFEST
+SHA1 5c14511cc1558a287c812e5dc2cdc3ed0b179650 META.json
+SHA1 1480ca67961a7e0c88fc4976945716fd4598df36 META.yml
+SHA1 4b633df6e701c22a5ee5d3926ca706d582ea44de Makefile.PL
+SHA1 e0e9d9bcd248a6af4257f6024e4f113232c94a05 README
+SHA1 0e9d809f646d2b8ec792a3303d1b094ac486d0ee lib/WWW/Search/Torrentz.pm
+SHA1 eca530ab711e80f825f2ea4c04b8f248efe3f7f9 lib/WWW/Search/Torrentz/Result.pm
+SHA1 82825b9d1219e03f1e02a517da4f57b95b230498 t/WWW-Search-Torrentz-Result.t
+SHA1 6273b1a595958ec7e3756ae3e3ed3bae227c7f9a t/WWW-Search-Torrentz.t
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1
+
+iQIcBAEBCgAGBQJTUvX9AAoJEMoENb5ewbNiv9EQAKb3D9JaZ4s+GA4HFH3O6iFB
+5LuITpzdKhrdvFv9YxgUsv/RNU8apkFp7QtzjxQORoTpwJJxM3HzZCf+GRx/r/pa
+LGCJUx5Cu0WdGgr1ozQosGISz/1EYuaJoTkzuOVb7kpMTgqy5JHXhfkJerSt6W99
+Xlypg7UbEOEq0YezSIrfEpDKAXTQyNE7q8s2RBXJvu9bLHu/C4Ca5z7HHfjmBtX5
+pRfR4Zz5LPmcBZaTH+5cp50pJO5stuPHhqLHCMclIqzX2BEnMWoPw+WHPXVpabdo
+edrH+0Ikr7HvX1OndI43bMxVM5XL5SrpShPBMhI/obtv/ajGptjVAEOwh9blyqkE
+lUUMDuSt0zyWLkODfZ14zxw5Z3xuqNQh9djQY1manEyzNKxj1MUBYcnF1+woE4n3
+3+RL2IBEmhBl7nNuYc+OlzeR43GSyHLHu5FK1TatehjBKywksSDrfFa3JYV6Ujea
+mlmtQwzC4P/26p3KXvjUErDSTBMmh+eZn+IdZSARQh/BTqwmitl8j804vT5M1BZz
+D4SMCRhpi0bGuwbobjRg7D+hJgXaK+3J9mumxMUOaglXaUSetZfHjvREKaMw7C7y
+mZKTuh02KH33FHtlbwagdQHqZLXRiP/V/BMgZ0nNU7/5we6EKjw0/rUeJRQEGe1W
+uSaQWTBeQEeCDdqFlHBE
+=NsaJ
+-----END PGP SIGNATURE-----
