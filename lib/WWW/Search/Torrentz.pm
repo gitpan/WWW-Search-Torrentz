@@ -5,15 +5,18 @@ use strict;
 use warnings;
 no if $] >= 5.018, warnings => 'experimental::smartmatch';
 use parent qw/WWW::Search/;
+use re '/s';
 
-our $VERSION = '0.001002';
+our $VERSION = '0.001003';
 our $MAINTAINER = 'Marius Gavrilescu <marius@ieval.ro>';
 
 use WWW::Search::Torrentz::Result;
 
+sub debug { say STDERR @_ } ## no critic (RequireCheckedSyscalls)
+
 sub gui_query{ shift->native_query(@_) }
 
-sub _native_setup_search{
+sub _native_setup_search{ ## no critic (ProhibitUnusedPrivateSubroutines)
 	my ($self, $native_query, $options) = @_;
 	$self->agent_email('marius@ieval.ro');
 	$options //= {};
@@ -23,9 +26,9 @@ sub _native_setup_search{
 	$self->user_agent->delay(2/60);
 }
 
-sub fullint ($) { int (shift =~ y/0-9//cdr) }
+sub fullint ($) { int (shift =~ y/0-9//cdr) } ## no critic (ProhibitSubroutinePrototypes)
 
-sub _parse_tree{
+sub _parse_tree{ ## no critic (ProhibitUnusedPrivateSubroutines)
 	my ($self, $tree) = @_;
 	my $found = 0;
 
@@ -41,13 +44,13 @@ sub _parse_tree{
 		next unless defined $a;
 
 		my $infohash = substr $a->attr('href'), 1;
-		next unless $infohash =~ m,^[a-f0-9]{40}$,;
+		next unless $infohash =~ /^[a-f0-9]{40}$/;
 		my $title = $a->as_text;
 		my ($verified, $age, $size, $seeders, $leechers);
 		$verified = 0;
 		for my $span ($node->find('span')) {
 			given($span->attr('class')){
-				$verified = int ($span->as_text =~ m,^\d+,) when 'v';
+				$verified = int ($span->as_text =~ /^\d+/) when 'v';
 				$age = $span->as_text when 'a';
 				$size = $span->as_text when 's';
 				$seeders = fullint $span->as_text when 'u';
@@ -56,16 +59,16 @@ sub _parse_tree{
 		}
 
 		push @{$self->{cache}}, WWW::Search::Torrentz::Result->new(infohash => $infohash, title => $title, verified => $verified, age => $age, size => $size, seeders => $seeders, leechers => $leechers, ua => $self->user_agent);
-		say STDERR "infohash => $infohash, title => $title, verified => $verified, age => $age, size => $size, seeders => $seeders, leechers => $leechers" if $self->{search_debug};
+		debug "infohash => $infohash, title => $title, verified => $verified, age => $age, size => $size, seeders => $seeders, leechers => $leechers" if $self->{search_debug};
 		$found++;
 	}
 
 	my $url = $tree->look_down(rel => 'next');
 	if (defined $url) {
-		my $prev = $self->{_prev_url} =~ s,/[^/]+$,,r;
+		my $prev = $self->{_prev_url} =~ s{/[^/]+$}{}r;
 		$self->{_next_url} = $prev . $url->attr('href')
 	}
-	say STDERR "Found: $found" if $self->{search_debug};
+	debug "Found: $found" if $self->{search_debug};
 	return $found;
 }
 

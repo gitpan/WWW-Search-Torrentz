@@ -5,7 +5,7 @@ use strict;
 use warnings;
 use parent qw/WWW::SearchResult/;
 
-our $VERSION = '0.001002';
+our $VERSION = '0.001003';
 
 use HTML::TreeBuilder;
 use URI::Escape qw/uri_escape/;
@@ -15,8 +15,7 @@ sub new{
 	my $self = $class->SUPER::new(@_);
 	$self->{parsed} = 0;
 
-	no strict 'refs';
-	$self->$_($args{$_}) for qw/title verified age size seeders leechers infohash/;
+	$self->_elem($_ => $args{$_}) for qw/title verified age size seeders leechers infohash/;
 	$self->{ua} = $args{ua};
 	$self->add_url("https://torrentz.eu/$args{infohash}");
 	$self
@@ -50,7 +49,7 @@ sub parse_page {
 	my $trackers = $tree->look_down(class => 'trackers');
 	$self->{trackers} //= [];
 	for my $tracker ($trackers->find('dl')) {
-		push $self->{trackers}, $tracker->find('a')->as_text;
+		push @{$self->{trackers}}, $tracker->find('a')->as_text;
 	}
 
 	my $files = $tree->look_down(class => 'files');
@@ -79,7 +78,7 @@ sub parse_directory{
 		} else {
 			$child->objectify_text;
 			my ($filename, $size) = $child->find('~text');
-			push $self->{files}, +{
+			push @{$self->{files}}, +{
 				path => $prefix.$filename->attr('text'),
 				size => $size->attr('text')
 			}

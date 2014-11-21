@@ -1,5 +1,10 @@
 Revision history for Perl extension WWW::Search::Torrentz.
 
+0.001003 2014-10-21T18:20+02:00
+ - Add Perl::Critic release test and fix reported problems
+ - Use Test::RequiresInternet
+ - Fix exprimental push on reference warnings
+
 0.001002 2014-04-20T01:17+03:00
  - Fix incorrect parsing of seeder/leechers count
  - Update Changes to CPAN::Changes::Spec format

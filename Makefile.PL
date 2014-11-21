@@ -10,7 +10,8 @@ WriteMakefile(
 	LICENSE           => 'perl',
 	SIGN              => 1,
 	BUILD_REQUIRES    => {
-		qw/WWW::Search::Test 0/,
+		qw/Test::RequiresInternet 0
+		   WWW::Search::Test 0/,
 	},
 	PREREQ_PM         => {
 		qw/HTML::TreeBuilder 0

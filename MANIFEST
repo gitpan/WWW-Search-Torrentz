@@ -4,6 +4,8 @@ MANIFEST
 README
 t/WWW-Search-Torrentz.t
 t/WWW-Search-Torrentz-Result.t
+t/perlcritic.t
+t/perlcriticrc
 lib/WWW/Search/Torrentz.pm
 lib/WWW/Search/Torrentz/Result.pm
 META.yml                                 Module YAML meta-data (added by MakeMaker)

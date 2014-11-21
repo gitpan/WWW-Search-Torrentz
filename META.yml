@@ -3,11 +3,12 @@ abstract: 'search torrentz.eu with WWW::Search'
 author:
   - 'Marius Gavrilescu <marius@ieval.ro>'
 build_requires:
+  Test::RequiresInternet: '0'
   WWW::Search::Test: '0'
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 0
-generated_by: 'ExtUtils::MakeMaker version 6.66, CPAN::Meta::Converter version 2.140640'
+generated_by: 'ExtUtils::MakeMaker version 6.98, CPAN::Meta::Converter version 2.142690'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,4 +25,4 @@ requires:
   perl: '5.014000'
 resources:
   repository: https://git.ieval.ro/?p=www-search-torrentz.git
-version: '0.001002'
+version: '0.001003'
